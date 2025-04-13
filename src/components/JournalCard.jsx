@@ -2,7 +2,7 @@ import React from 'react';
 
 const JournalCard = ({ id, title, description, image, onDelete }) => {
     return (
-        <div className="bg-white rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow">
+        <div className="mx-5 bg-white rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow">
             <div className="flex items-center space-x-4">
                 <img
                     src={image}

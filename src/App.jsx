@@ -10,7 +10,7 @@ function App() {
         <Router>
             <div className="flex flex-col min-h-screen">
                 <Navbar />
-                <main className="container mx-auto px-4 py-8 flex-grow">
+                <main className="container px-8 py-8 flex-grow">
                     <Routes>
                         <Route path="/" element={<JournalList />} />
                         {/* Add more routes as needed */}
