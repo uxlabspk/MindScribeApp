@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from '/public/vite.svg';
+import logo from '/public/logo.png';
 
 const Navbar = () => {
     return (
-        <nav className="bg-white p-4 shadow-sm">
+        <nav className="bg-white py-4 shadow-sm">
             <div className="container mx-auto flex justify-between items-center">
-                <Link to="/" className="flex items-center space-x-2">
-                    <img src={logo} alt="MindScribe" className="h-8 w-8" />
-                    <span className="text-xl font-bold text-gray-800">MindScribe</span>
+                <Link to="/" className="flex items-center justify-between space-x-2">
+                    <img src={logo} alt="MindScribe" className="h-12 w-10" />
+                    <span className="text-2xl mb-1 text-gray-800">MindScribe</span>
                 </Link>
                 <div className="text-gray-800">
                     <span>Hi, User</span>
