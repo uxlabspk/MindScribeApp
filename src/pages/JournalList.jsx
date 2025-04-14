@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import JournalCard from './JournalCard.jsx';
+import JournalCard from './components/JournalCard.jsx';
 import notFoundImage from '/public/ic_not_found.png';
-import PrimaryButton from "./PrimaryButton.jsx";
+import PrimaryButton from "./components/PrimaryButton.jsx";
 
 const JournalList = () => {
     const [journals, setJournals] = useState([]);

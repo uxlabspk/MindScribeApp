@@ -1,10 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar.jsx';
-import JournalList from './components/JournalList.jsx';
-import Footer from './components/Footer.jsx';
+import Navbar from './pages/components/Navbar.jsx';
+import JournalList from './pages/JournalList.jsx';
+import Footer from './pages/components/Footer.jsx';
 import './index.css';
-import NewJournal from "./components/NewJournal.jsx";
+import NewJournal from "./pages/NewJournal.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 function App() {
     return (
@@ -15,6 +16,8 @@ function App() {
                     <Routes>
                         <Route path="/" element={<JournalList />} />
                         <Route path="/add-journal" element={<NewJournal />} />
+
+                        <Route path="/*" element={<NotFound />} />
                     </Routes>
                 </main>
                 <Footer />
