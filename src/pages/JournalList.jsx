@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import JournalCard from './components/JournalCard.jsx';
 import notFoundImage from '/public/ic_not_found.png';
 import PrimaryButton from "./components/PrimaryButton.jsx";
+import {useNavigate} from "react-router-dom";
 
 const JournalList = () => {
     const [journals, setJournals] = useState([]);
+    const navigate = useNavigate();
+
 
     // Load journals from localStorage on component mount
     useEffect(() => {
@@ -29,6 +32,11 @@ const JournalList = () => {
         // Update localStorage
         localStorage.setItem('journals', JSON.stringify(updatedJournals));
     };
+
+    const handleEdit = (id) => {
+        console.log(id)
+        navigate(`/edit-journal/${id}`);
+    }
 
     return (
         <div>
@@ -66,6 +74,7 @@ const JournalList = () => {
                         description={journal.description}
                         image={journal.image}
                         onDelete={handleDelete}
+                        onEdit={handleEdit}
                     />))}
                 </div>
             )}

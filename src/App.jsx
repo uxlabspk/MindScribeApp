@@ -6,6 +6,7 @@ import Footer from './pages/components/Footer.jsx';
 import './index.css';
 import NewJournal from "./pages/NewJournal.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import EditJournal from "./pages/EditJournal.jsx";
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<JournalList />} />
                         <Route path="/add-journal" element={<NewJournal />} />
+                        <Route path={'/edit-journal/:id'} element={<EditJournal />} />
 
                         <Route path="/*" element={<NotFound />} />
                     </Routes>
