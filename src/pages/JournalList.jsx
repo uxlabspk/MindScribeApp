@@ -38,6 +38,11 @@ const JournalList = () => {
         navigate(`/edit-journal/${id}`);
     }
 
+    const handleViewDetails = (id) => {
+        console.log(id);
+        navigate(`/journal/${id}`)
+    }
+
     return (
         <div>
             <div className={'flex align-center justify-between py-6'}>
@@ -75,6 +80,7 @@ const JournalList = () => {
                         image={journal.image}
                         onDelete={handleDelete}
                         onEdit={handleEdit}
+                        onViewDetails={handleViewDetails}
                     />))}
                 </div>
             )}

@@ -7,6 +7,7 @@ import './index.css';
 import NewJournal from "./pages/NewJournal.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import EditJournal from "./pages/EditJournal.jsx";
+import JournalDetails from "./pages/JournalDetails.jsx";
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                         <Route path="/" element={<JournalList />} />
                         <Route path="/add-journal" element={<NewJournal />} />
                         <Route path={'/edit-journal/:id'} element={<EditJournal />} />
+                        <Route path={'/journal/:id'} element={<JournalDetails />} />
 
                         <Route path="/*" element={<NotFound />} />
                     </Routes>

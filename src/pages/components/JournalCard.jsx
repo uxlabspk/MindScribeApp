@@ -1,17 +1,23 @@
 import React from 'react';
 
-const JournalCard = ({ id, title, description, image, onDelete, onEdit }) => {
+const JournalCard = ({ id, title, description, image, onDelete, onEdit, onViewDetails }) => {
+
+    const size = description.length;
+    description = description.substring(0, size - (size / 2));
+    description += '...'
+
     return (
-        <div className="bg-gray-200 rounded-lg shadow-sm p-4 my-4 hover:shadow-md transition-shadow">
+        <div className="bg-gray-100 rounded-lg shadow-sm p-4 my-4 hover:shadow-md transition-shadow">
             <div className="flex items-center space-x-4">
                 <img
                     src={image}
                     alt={title}
-                    className="w-16 h-16 rounded-md object-cover"
+                    className="w-40 rounded-md object-cover"
                 />
                 <div className="flex-grow">
-                    <h3 className="text-xl font-bold text-gray-800">{title}</h3>
-                    <p className="text-gray-600">{description}</p>
+                    <h3 className="text-xl text-gray-800">{title}</h3>
+                    <p className="text-gray-600 mt-2">{description}</p>
+                    <p className="text-blue-600 text-[12px] underline cursor-pointer mt-5"  onClick={ () => onViewDetails(id) } >READ MORE</p>
                 </div>
                 <div className="flex space-x-2">
                     <button
