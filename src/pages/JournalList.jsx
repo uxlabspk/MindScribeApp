@@ -6,8 +6,9 @@ import {useNavigate} from "react-router-dom";
 
 const JournalList = () => {
     const [journals, setJournals] = useState([]);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
     const navigate = useNavigate();
-
 
     // Load journals from localStorage on component mount
     useEffect(() => {
@@ -22,15 +23,31 @@ const JournalList = () => {
         }
     }, []);
 
-    const handleDelete = (id) => {
+    const handleDeleteClick = (id) => {
+        // Set the ID to delete and show the confirmation dialog
+        setDeleteId(id);
+        setShowConfirm(true);
+    };
+
+    const confirmDelete = () => {
         // Filter out the journal to be deleted
-        const updatedJournals = journals.filter(journal => journal.id !== id);
+        const updatedJournals = journals.filter(journal => journal.id !== deleteId);
 
         // Update state
         setJournals(updatedJournals);
 
         // Update localStorage
         localStorage.setItem('journals', JSON.stringify(updatedJournals));
+
+        // Close the dialog
+        setShowConfirm(false);
+        setDeleteId(null);
+    };
+
+    const cancelDelete = () => {
+        // Close the dialog without deleting
+        setShowConfirm(false);
+        setDeleteId(null);
     };
 
     const handleEdit = (id) => {
@@ -64,7 +81,6 @@ const JournalList = () => {
                 />
             </div>
 
-
             {journals.length === 0 ? (
                 <div className="text-center py-16 flex flex-col items-center gap-5">
                     <img src={notFoundImage} alt="Placeholder image" width={300} />
@@ -78,10 +94,40 @@ const JournalList = () => {
                         title={journal.title}
                         description={journal.description}
                         image={journal.image}
-                        onDelete={handleDelete}
+                        onDelete={handleDeleteClick}
                         onEdit={handleEdit}
                         onViewDetails={handleViewDetails}
                     />))}
+                </div>
+            )}
+
+            {/* Confirmation Dialog */}
+            {showConfirm && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white rounded-lg p-6 max-w-sm mx-4 text-center">
+                        <h3 className="text-2xl font-medium text-black mb-4">Confirm</h3>
+                        <p className="text-gray-800 mb-8">This action can't be reverted. Are you sure you want to proceed?</p>
+                        <div className="flex justify-between px-8">
+                            <button
+                                className="px-8 py-3 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors flex items-center justify-center"
+                                onClick={confirmDelete}
+                            >
+                                <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 12L10 17L20 7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
+                                Yes
+                            </button>
+                            <button
+                                className="px-8 py-3 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200 transition-colors flex items-center justify-center"
+                                onClick={cancelDelete}
+                            >
+                                <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
+                                No
+                            </button>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>

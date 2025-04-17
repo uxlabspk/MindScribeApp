@@ -2,8 +2,7 @@ import React from 'react';
 
 const JournalCard = ({ id, title, description, image, onDelete, onEdit, onViewDetails }) => {
 
-    const size = description.length;
-    description = description.substring(0, size - (size / 2));
+    description = description.substring(0, 100);
     description += '...'
 
     return (
