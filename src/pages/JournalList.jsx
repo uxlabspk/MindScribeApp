@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import JournalCard from './components/JournalCard.jsx';
-import notFoundImage from '/public/ic_not_found.png';
+import notFoundImage from '/ic_not_found.png';
 import PrimaryButton from "./components/PrimaryButton.jsx";
 import {useNavigate} from "react-router-dom";
 
@@ -10,7 +10,6 @@ const JournalList = () => {
     const [deleteId, setDeleteId] = useState(null);
     const navigate = useNavigate();
 
-    // Load journals from localStorage on component mount
     useEffect(() => {
         const storedJournals = localStorage.getItem('journals');
         if (storedJournals) {
@@ -24,28 +23,22 @@ const JournalList = () => {
     }, []);
 
     const handleDeleteClick = (id) => {
-        // Set the ID to delete and show the confirmation dialog
         setDeleteId(id);
         setShowConfirm(true);
     };
 
     const confirmDelete = () => {
-        // Filter out the journal to be deleted
         const updatedJournals = journals.filter(journal => journal.id !== deleteId);
 
-        // Update state
         setJournals(updatedJournals);
 
-        // Update localStorage
         localStorage.setItem('journals', JSON.stringify(updatedJournals));
 
-        // Close the dialog
         setShowConfirm(false);
         setDeleteId(null);
     };
 
     const cancelDelete = () => {
-        // Close the dialog without deleting
         setShowConfirm(false);
         setDeleteId(null);
     };
@@ -101,7 +94,6 @@ const JournalList = () => {
                 </div>
             )}
 
-            {/* Confirmation Dialog */}
             {showConfirm && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white rounded-lg p-6 max-w-sm mx-4 text-center">

@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const EditJournal = () => {
-    // State to manage form inputs
     const [title, setTitle] = useState("");
     const [notes, setNotes] = useState("");
     const [image, setImage] = useState(null);
@@ -12,72 +11,61 @@ const EditJournal = () => {
 
     const fileInputRef = useRef(null);
     const navigate = useNavigate();
-    const { id } = useParams(); // Get the journal ID from URL params
+    const { id } = useParams();
 
-    // Load journal data on component mount
     useEffect(() => {
         const loadJournal = () => {
             try {
                 setLoading(true);
 
-                // Get journals from localStorage
                 const journals = JSON.parse(localStorage.getItem("journals") || "[]");
 
-                // Find the journal with the matching ID
-                const journalId = parseInt(id); // Convert string param to number
+                const journalId = parseInt(id);
                 const journal = journals.find(j => j.id === journalId);
 
                 if (!journal) {
                     throw new Error("Journal not found");
                 }
 
-                // Set form data
-                setTitle(journal.title);
-                setNotes(journal.description); // Using description as notes
+                setTitle(journal.title)
+                setNotes(journal.description)
 
-                // If journal has an image, set it as preview
                 if (journal.image) {
-                    setImagePreview(journal.image);
+                    setImagePreview(journal.image)
                 }
 
-                setLoading(false);
+                setLoading(false)
             } catch (error) {
-                console.error("Error loading journal:", error);
-                setError(error.message);
-                setLoading(false);
+                console.error("Error loading journal:", error)
+                setError(error.message)
+                setLoading(false)
             }
-        };
+        }
 
-        loadJournal();
-    }, [id]);
+        loadJournal()
+    }, [id])
 
-    // Function to handle image selection
     const handleImageChange = (e) => {
-        const file = e.target.files[0];
+        const file = e.target.files[0]
         if (file) {
-            setImage(file);
-            // Create a preview URL for the selected image
-            const previewUrl = URL.createObjectURL(file);
-            setImagePreview(previewUrl);
+            setImage(file)
+            const previewUrl = URL.createObjectURL(file)
+            setImagePreview(previewUrl)
         }
-    };
+    }
 
-    // Function to trigger file input click
     const handleImageClick = () => {
-        fileInputRef.current.click();
-    };
+        fileInputRef.current.click()
+    }
 
-    // Function to remove selected image
     const handleRemoveImage = () => {
-        setImage(null);
-        setImagePreview(null);
-        // Reset the file input
+        setImage(null)
+        setImagePreview(null)
         if (fileInputRef.current) {
-            fileInputRef.current.value = "";
+            fileInputRef.current.value = ""
         }
-    };
+    }
 
-    // Function to convert image file to base64 for storage
     const convertToBase64 = (file) => {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -87,15 +75,12 @@ const EditJournal = () => {
         });
     };
 
-    // Function to handle form submission (Update)
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            // Get existing journals from localStorage
             const journals = JSON.parse(localStorage.getItem("journals") || "[]");
 
-            // Find the index of the journal to update
             const journalId = parseInt(id);
             const journalIndex = journals.findIndex(j => j.id === journalId);
 
@@ -103,28 +88,23 @@ const EditJournal = () => {
                 throw new Error("Journal not found");
             }
 
-            // Create updated journal object
             const updatedJournal = {
-                ...journals[journalIndex], // Keep existing properties
+                ...journals[journalIndex],
                 title,
-                description: notes, // Map notes to description for consistency
+                description: notes,
             };
 
-            // If there's a new image, convert it to base64 and store it
             if (image) {
                 const base64Image = await convertToBase64(image);
                 updatedJournal.image = base64Image;
             }
 
-            // Update the journal in the array
             journals[journalIndex] = updatedJournal;
 
-            // Save updated array back to localStorage
             localStorage.setItem("journals", JSON.stringify(journals));
 
             console.log("Journal Updated:", updatedJournal);
 
-            // Navigate back to journal list
             navigate("/");
 
         } catch (error) {
@@ -133,18 +113,14 @@ const EditJournal = () => {
         }
     };
 
-    // Function to cancel editing
     const handleCancel = () => {
-        // Navigate back to journal list
         navigate("/");
     };
 
-    // Show loading state
     if (loading) {
         return <div className="py-8 text-center">Loading...</div>;
     }
 
-    // Show error state
     if (error) {
         return (
             <div className="py-8 text-center">
@@ -161,19 +137,10 @@ const EditJournal = () => {
 
     return (
         <div className="py-8">
-            {/* Form Header */}
             <h2 className="text-xl mb-4">Edit Journal</h2>
-
-            {/* Form Container */}
             <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow">
-                {/* Image Upload Section */}
                 <div className="mb-4">
-                    <label
-                        className="block text-gray-700 font-medium mb-2"
-                    >
-                        Add Image
-                    </label>
-
+                    <label className="block text-gray-700 font-medium mb-2">Add Image</label>
                     <input
                         type="file"
                         ref={fileInputRef}
@@ -232,7 +199,6 @@ const EditJournal = () => {
                     )}
                 </div>
 
-                {/* Title Input */}
                 <div className="mb-4">
                     <label
                         htmlFor="title"
@@ -251,7 +217,6 @@ const EditJournal = () => {
                     />
                 </div>
 
-                {/* Notes Text Area */}
                 <div className="mb-4">
                     <label
                         htmlFor="notes"
@@ -270,9 +235,7 @@ const EditJournal = () => {
                     ></textarea>
                 </div>
 
-                {/* Buttons */}
                 <div className="flex justify-end">
-                    {/* Update Button */}
                     <button
                         type="submit"
                         className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded mr-2 flex items-center gap-2"
@@ -283,7 +246,6 @@ const EditJournal = () => {
                         Update
                     </button>
 
-                    {/* Cancel Button */}
                     <button
                         type="button"
                         onClick={handleCancel}

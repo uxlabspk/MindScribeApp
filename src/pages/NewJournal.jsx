@@ -1,8 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 const NewJournal = () => {
-    // State to manage form inputs
     const [title, setTitle] = useState("");
     const [notes, setNotes] = useState("");
     const [image, setImage] = useState(null);
@@ -10,33 +9,27 @@ const NewJournal = () => {
     const fileInputRef = useRef(null);
     const navigate = useNavigate();
 
-    // Function to handle image selection
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
             setImage(file);
-            // Create a preview URL for the selected image
             const previewUrl = URL.createObjectURL(file);
             setImagePreview(previewUrl);
         }
     };
 
-    // Function to trigger file input click
     const handleImageClick = () => {
         fileInputRef.current.click();
     };
 
-    // Function to remove selected image
     const handleRemoveImage = () => {
         setImage(null);
         setImagePreview(null);
-        // Reset the file input
         if (fileInputRef.current) {
             fileInputRef.current.value = "";
         }
     };
 
-    // Function to convert image file to base64 for storage
     const convertToBase64 = (file) => {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -46,46 +39,37 @@ const NewJournal = () => {
         });
     };
 
-    // Function to handle form submission (Save)
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            // Generate a unique ID for the journal entry
             const id = Date.now();
 
-            // Create journal object
             const journalEntry = {
                 id,
                 title,
-                description: notes, // Map notes to description for consistency with JournalList
+                description: notes,
                 image: null
             };
 
-            // If there's an image, convert it to base64 and store it
             if (image) {
                 const base64Image = await convertToBase64(image);
                 journalEntry.image = base64Image;
             }
 
-            // Get existing journals from localStorage or initialize empty array
             const existingJournals = JSON.parse(localStorage.getItem("journals") || "[]");
 
-            // Add new journal to the array
             const updatedJournals = [journalEntry, ...existingJournals];
 
-            // Save updated array back to localStorage
             localStorage.setItem("journals", JSON.stringify(updatedJournals));
 
             console.log("Journal Saved:", journalEntry);
 
-            // Clear form after submission
             setTitle("");
             setNotes("");
             setImage(null);
             setImagePreview(null);
 
-            // Navigate back to journal list
             navigate("/");
 
         } catch (error) {
@@ -94,7 +78,6 @@ const NewJournal = () => {
         }
     };
 
-    // Function to discard changes
     const handleDiscard = () => {
         setTitle("");
         setNotes("");
@@ -107,18 +90,10 @@ const NewJournal = () => {
 
     return (
         <div className="py-8">
-            {/* Form Header */}
             <h2 className="text-xl mb-4">Add new Journal</h2>
-
-            {/* Form Container */}
             <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow">
-                {/* Image Upload Section */}
                 <div className="mb-4">
-                    <label
-                        className="block text-gray-700 font-medium mb-2"
-                    >
-                        Add Image
-                    </label>
+                    <label className="block text-gray-700 font-medium mb-2">Add Image</label>
 
                     <input
                         type="file"
@@ -178,14 +153,8 @@ const NewJournal = () => {
                     )}
                 </div>
 
-                {/* Title Input */}
                 <div className="mb-4">
-                    <label
-                        htmlFor="title"
-                        className="block text-gray-700 font-medium mb-2"
-                    >
-                        Title
-                    </label>
+                    <label htmlFor="title" className="block text-gray-700 font-medium mb-2">Title</label>
                     <input
                         type="text"
                         id="title"
@@ -197,7 +166,6 @@ const NewJournal = () => {
                     />
                 </div>
 
-                {/* Notes Text Area */}
                 <div className="mb-4">
                     <label
                         htmlFor="notes"
@@ -216,9 +184,7 @@ const NewJournal = () => {
                     ></textarea>
                 </div>
 
-                {/* Buttons */}
                 <div className="flex justify-end">
-                    {/* Save Button */}
                     <button
                         type="submit"
                         className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded mr-2 flex items-center gap-2"
@@ -229,7 +195,6 @@ const NewJournal = () => {
                         Save
                     </button>
 
-                    {/* Discard Button */}
                     <button
                         type="button"
                         onClick={handleDiscard}

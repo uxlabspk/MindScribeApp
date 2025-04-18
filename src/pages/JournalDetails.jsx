@@ -12,21 +12,17 @@ const JournalDetails = () => {
     useEffect(() => {
         const loadJournal = () => {
             try {
-                const journalId = parseInt(id); // Convert string param to number
-                // Get journals from localStorage
+                const journalId = parseInt(id);
                 const journals = JSON.parse(localStorage.getItem("journals") || "[]");
-                // Find the journal with the matching ID
                 const journalById = journals.find(j => j.id === journalId);
                 
                 if (!journalById) {
                     throw new Error("Journal not found");
                 }
-                
-                // Set form data
+
                 setTitle(journalById.title);
-                setNotes(journalById.description); // Using description as notes
-                
-                // If journal has an image, set it
+                setNotes(journalById.description);
+
                 if (journalById.image) {
                     setImage(journalById.image);
                 }
