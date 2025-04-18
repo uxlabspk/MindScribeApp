@@ -8,6 +8,7 @@ import NewJournal from "./pages/NewJournal.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import EditJournal from "./pages/EditJournal.jsx";
 import JournalDetails from "./pages/JournalDetails.jsx";
+import InstallPrompt from "./pages/components/InstallPrompt.jsx";
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
                     </Routes>
                 </main>
                 <Footer />
+                <InstallPrompt />
             </div>
         </Router>
     );
