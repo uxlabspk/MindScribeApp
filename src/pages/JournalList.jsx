@@ -107,15 +107,17 @@ const JournalList = () => {
       )}
 
       {showConfirm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-sm mx-4 text-center">
-            <h3 className="text-2xl font-medium text-black mb-4">Confirm</h3>
-            <p className="text-gray-800 mb-8">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md sm:max-w-sm text-center">
+            <h3 className="text-xl sm:text-2xl font-medium text-black mb-4">
+              Confirm
+            </h3>
+            <p className="text-sm sm:text-base text-gray-800 mb-6">
               This action can't be reverted. Are you sure you want to proceed?
             </p>
-            <div className="flex justify-between px-8">
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
               <button
-                className="px-8 py-3 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors flex items-center justify-center"
+                className="w-full sm:w-auto px-6 py-3 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors flex items-center justify-center"
                 onClick={confirmDelete}
               >
                 <svg
@@ -135,7 +137,7 @@ const JournalList = () => {
                 Yes
               </button>
               <button
-                className="px-8 py-3 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200 transition-colors flex items-center justify-center"
+                className="w-full sm:w-auto px-6 py-3 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200 transition-colors flex items-center justify-center"
                 onClick={cancelDelete}
               >
                 <svg
