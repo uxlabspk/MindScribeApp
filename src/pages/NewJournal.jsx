@@ -70,7 +70,7 @@ const NewJournal = () => {
             setImage(null);
             setImagePreview(null);
 
-            navigate("/");
+            navigate("/app/");
 
         } catch (error) {
             console.error("Error saving journal:", error);

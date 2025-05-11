@@ -36,7 +36,7 @@ const JournalDetails = () => {
     }, [id]);
 
     const goBackHandler = () => {
-        navigate("/");
+        navigate("/app/");
     }
 
     if (error) {
